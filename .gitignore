@@ -1,0 +1,17 @@
+.env
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+vectorstore/*
+!vectorstore/.gitkeep
+
+data/raw/*
+!data/raw/.gitkeep
+
+.DS_Store
+.idea/
+.vscode/
+
+*.log
