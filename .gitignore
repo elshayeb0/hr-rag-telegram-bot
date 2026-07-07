@@ -15,3 +15,12 @@ data/raw/*
 .vscode/
 
 *.log
+
+.env
+__pycache__/
+*.pyc
+.venv/
+vectorstore/chroma/
+data/raw/*
+!data/raw/.gitkeep.DS_Store
+.DS_Store
