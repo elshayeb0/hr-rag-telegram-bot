@@ -26,7 +26,7 @@ def evaluate_retrieval_item(item: dict) -> dict:
     expected_sources = set(item.get("expected_sources", []))
 
     if item["expected_behavior"] == "refusal":
-        source_match = True
+        source_match = len(returned_sources) == 0
     else:
         source_match = expected_sources.issubset(returned_sources)
 
