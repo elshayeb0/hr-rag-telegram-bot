@@ -60,7 +60,7 @@ def answer_question(request: ChatRequest) -> ChatResponse:
             ]
         )
     except Exception as error:
-        return model_error_response(error)
+        return model_error_response(error, citations=citations)
 
     answer = str(response.content).strip()
 
