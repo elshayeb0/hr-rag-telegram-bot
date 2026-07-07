@@ -58,10 +58,12 @@ def answer_question(request: ChatRequest) -> ChatResponse:
     if source_block:
         answer = f"{answer}\n\n{source_block}"
 
+    refused = "I do not have enough information from the official company documents" in answer
+
     return ChatResponse(
         answer=answer,
         citations=citations,
         retrieved_chunks=chunks,
         used_external_knowledge=False,
-        refused=False,
+        refused=refused,
     )
