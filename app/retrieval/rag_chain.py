@@ -3,6 +3,7 @@ from langchain_core.messages import HumanMessage, SystemMessage
 from app.prompts import PromptManager
 from app.providers import get_llm
 from app.retrieval.citations import build_citations, format_citations
+from app.retrieval.query_rewriter import rewrite_query
 from app.retrieval.retriever import retrieve_chunks
 from app.schemas import ChatRequest, ChatResponse
 from app.utils.model_errors import model_error_response
@@ -23,8 +24,13 @@ def _format_context(chunks) -> str:
 
 
 def answer_question(request: ChatRequest) -> ChatResponse:
+    retrieval_query = rewrite_query(
+        user_id=request.user_id,
+        question=request.message,
+    )
+
     chunks = retrieve_chunks(
-        query=request.message,
+        query=retrieval_query,
         user_groups=request.user_groups,
     )
 
