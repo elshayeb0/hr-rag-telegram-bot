@@ -5,6 +5,7 @@ from app.providers import get_llm
 from app.retrieval.citations import build_citations, format_citations
 from app.retrieval.retriever import retrieve_chunks
 from app.schemas import ChatRequest, ChatResponse
+from app.utils.model_errors import model_error_response
 
 
 def _format_context(chunks) -> str:
@@ -45,12 +46,15 @@ def answer_question(request: ChatRequest) -> ChatResponse:
     )
 
     llm = get_llm()
-    response = llm.invoke(
-        [
-            SystemMessage(content=PromptManager.system_prompt()),
-            HumanMessage(content=prompt),
-        ]
-    )
+    try:
+        response = llm.invoke(
+            [
+                SystemMessage(content=PromptManager.system_prompt()),
+                HumanMessage(content=prompt),
+            ]
+        )
+    except Exception as error:
+        return model_error_response(error)
 
     answer = str(response.content).strip()
 
