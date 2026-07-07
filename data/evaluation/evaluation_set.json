@@ -1,0 +1,23 @@
+[
+  {
+    "id": "annual_leave_days",
+    "question": "How many annual leave days do employees get?",
+    "expected_sources": ["sample_hr_policy.docx"],
+    "expected_phrases": ["21 working days"],
+    "expected_behavior": "grounded_answer"
+  },
+  {
+    "id": "sick_leave_notification",
+    "question": "What should an employee do on the first day of sickness?",
+    "expected_sources": ["sample_hr_policy.docx"],
+    "expected_phrases": ["notify", "manager", "HR"],
+    "expected_behavior": "grounded_answer"
+  },
+  {
+    "id": "remote_work_missing",
+    "question": "What is the company's remote work policy?",
+    "expected_sources": [],
+    "expected_phrases": [],
+    "expected_behavior": "refusal"
+  }
+]
