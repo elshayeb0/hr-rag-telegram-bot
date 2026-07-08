@@ -1,3 +1,14 @@
+---
+title: HR RAG Chatbot
+emoji: 🧠
+colorFrom: blue
+colorTo: indigo
+sdk: gradio
+sdk_version: "5.44.1"
+app_file: app.py
+pinned: false
+---
+
 # HR RAG Telegram Bot
 
 Production-oriented HR Retrieval-Augmented Generation (RAG) chatbot built with Python, LangChain, Chroma, and Telegram. The system enables HR employees to search internal company documents, retrieve relevant policies, answer HR questions with citations, and gracefully refuse when the requested information is unavailable.
