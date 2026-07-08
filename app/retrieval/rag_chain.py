@@ -6,6 +6,7 @@ from app.retrieval.citations import build_citations, format_citations
 from app.retrieval.query_rewriter import rewrite_query
 from app.retrieval.retriever import retrieve_chunks
 from app.schemas import ChatRequest, ChatResponse
+from app.utils.analytics import log_request_event
 from app.utils.model_errors import model_error_response
 
 
@@ -32,6 +33,25 @@ def answer_question(request: ChatRequest) -> ChatResponse:
     chunks = retrieve_chunks(
         query=retrieval_query,
         user_groups=request.user_groups,
+    )
+
+    log_request_event(
+        "retrieval_completed",
+        {
+            "user_id": request.user_id,
+            "original_query": request.message,
+            "retrieval_query": retrieval_query,
+            "retrieved_chunks": [
+                {
+                    "source": chunk.source,
+                    "chunk_id": chunk.chunk_id,
+                    "score": chunk.score,
+                    "access_level": chunk.access_level,
+                }
+                for chunk in chunks
+            ],
+            "chunk_count": len(chunks),
+        },
     )
 
     citations = build_citations(chunks)
