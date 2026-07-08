@@ -3,6 +3,37 @@ from app.retrieval.vectorstore import get_vectorstore
 from app.schemas import RetrievedChunk
 
 
+POLICY_QUERY_TERMS = {
+    "policy",
+    "procedure",
+    "rule",
+    "rules",
+    "leave",
+    "absence",
+    "sickness",
+    "sick",
+    "maternity",
+    "paternity",
+    "disciplinary",
+    "grievance",
+    "harassment",
+    "bullying",
+    "alcohol",
+    "drugs",
+    "expenses",
+    "byod",
+    "device",
+    "data protection",
+    "gdpr",
+    "notice",
+}
+
+
+def _looks_like_policy_query(query: str) -> bool:
+    normalized = query.lower()
+    return any(term in normalized for term in POLICY_QUERY_TERMS)
+
+
 def _document_to_retrieved_chunk(document, score: float | None = None) -> RetrievedChunk:
     metadata = document.metadata
 
@@ -23,9 +54,16 @@ def _document_to_retrieved_chunk(document, score: float | None = None) -> Retrie
 def retrieve_chunks(query: str, user_groups: list[str] | None = None) -> list[RetrievedChunk]:
     vectorstore = get_vectorstore()
 
+    search_kwargs = {
+        "k": settings.top_k,
+    }
+
+    if _looks_like_policy_query(query):
+        search_kwargs["filter"] = {"document_type": "policy"}
+
     results = vectorstore.similarity_search_with_relevance_scores(
         query=query,
-        k=settings.top_k,
+        **search_kwargs,
     )
 
     chunks: list[RetrievedChunk] = []
