@@ -32,6 +32,8 @@ class Settings(BaseSettings):
     chunk_size: int = Field(default=1000, alias="CHUNK_SIZE")
     chunk_overlap: int = Field(default=200, alias="CHUNK_OVERLAP")
     top_k: int = Field(default=5, alias="TOP_K")
+    retrieval_fetch_k: int = Field(default=12, alias="RETRIEVAL_FETCH_K")
+    max_chunks_per_source: int = Field(default=3, alias="MAX_CHUNKS_PER_SOURCE")
     min_retrieval_score: float = Field(default=0.2, alias="MIN_RETRIEVAL_SCORE")
 
     temperature: float = Field(default=0.0, alias="TEMPERATURE")

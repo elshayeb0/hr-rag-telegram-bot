@@ -1,10 +1,11 @@
 from app.retrieval.retriever import retrieve_chunks
 
 questions = [
-    "How many annual leave days do employees get?",
-    "What is my annual leave policy?",
     "What should an employee do on the first day of sickness?",
     "What is the sick leave policy?",
+    "What is the maternity policy?",
+    "What is the BYOD policy?",
+    "What is the alcohol policy?",
     "What is the company's remote work policy?",
     "What is my salary?",
     "How old am I?",
