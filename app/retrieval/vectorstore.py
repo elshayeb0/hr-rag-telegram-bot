@@ -19,6 +19,7 @@ def chunk_to_document(chunk: DocumentChunk) -> Document:
             "chunk_id": chunk.chunk_id,
             "access_level": chunk.access_level,
             "department": chunk.department,
+            **chunk.metadata,
         },
     )
 

@@ -1,16 +1,30 @@
 [
   {
-    "id": "annual_leave_days",
-    "question": "How many annual leave days do employees get?",
-    "expected_sources": ["sample_hr_policy.docx"],
-    "expected_phrases": ["21 working days"],
+    "id": "sick_leave_notification",
+    "question": "What should an employee do on the first day of sickness?",
+    "expected_sources": ["Sickness-And-Absence-Policy.docx"],
+    "expected_phrases": ["notify", "manager", "sickness"],
     "expected_behavior": "grounded_answer"
   },
   {
-    "id": "sick_leave_notification",
-    "question": "What should an employee do on the first day of sickness?",
-    "expected_sources": ["sample_hr_policy.docx"],
-    "expected_phrases": ["notify", "manager", "HR"],
+    "id": "sick_leave_policy",
+    "question": "What is the sick leave policy?",
+    "expected_sources": ["Sickness-And-Absence-Policy.docx"],
+    "expected_phrases": ["sickness", "absence"],
+    "expected_behavior": "grounded_answer"
+  },
+  {
+    "id": "maternity_policy",
+    "question": "What is the maternity policy?",
+    "expected_sources": ["Maternity-Policy.docx"],
+    "expected_phrases": ["maternity"],
+    "expected_behavior": "grounded_answer"
+  },
+  {
+    "id": "byod_policy",
+    "question": "What is the BYOD policy?",
+    "expected_sources": ["Bring-Your-Own-Device-BYOD-Policy.docx"],
+    "expected_phrases": ["device"],
     "expected_behavior": "grounded_answer"
   },
   {

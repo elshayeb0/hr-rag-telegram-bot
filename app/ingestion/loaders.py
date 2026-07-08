@@ -5,6 +5,8 @@ import pandas as pd
 from docx import Document as DocxDocument
 from pypdf import PdfReader
 
+from app.ingestion.metadata import build_document_metadata
+
 
 RawDocument = dict[str, Any]
 
@@ -27,7 +29,7 @@ def load_pdf(file_path: Path) -> list[RawDocument]:
                 "source_path": file_path,
                 "file_type": "pdf",
                 "page": page_index,
-                "metadata": {},
+                "metadata": build_document_metadata(file_path),
             }
         )
 
@@ -49,7 +51,7 @@ def load_docx(file_path: Path) -> list[RawDocument]:
             "source_path": file_path,
             "file_type": "docx",
             "page": None,
-            "metadata": {},
+            "metadata": build_document_metadata(file_path),
         }
     ]
 
@@ -75,7 +77,7 @@ def load_xlsx(file_path: Path) -> list[RawDocument]:
                 "file_type": "xlsx",
                 "sheet_name": sheet_name,
                 "row_range": f"1-{len(df)}",
-                "metadata": {},
+                "metadata": build_document_metadata(file_path),
             }
         )
 

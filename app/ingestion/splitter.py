@@ -60,8 +60,8 @@ def split_raw_document(raw_document: dict[str, Any]) -> list[DocumentChunk]:
                 row_range=raw_document.get("row_range"),
                 chunk_index=index,
                 chunk_id=chunk_id,
-                access_level=raw_document.get("access_level", DEFAULT_ACCESS_LEVEL),
-                department=raw_document.get("department"),
+                access_level=raw_document.get("metadata", {}).get("access_level", raw_document.get("access_level", DEFAULT_ACCESS_LEVEL)),
+                department=raw_document.get("metadata", {}).get("department", raw_document.get("department")),
                 metadata=raw_document.get("metadata", {}),
             )
         )

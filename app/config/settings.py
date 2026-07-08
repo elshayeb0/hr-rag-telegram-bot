@@ -39,6 +39,9 @@ class Settings(BaseSettings):
 
     max_history_messages: int = Field(default=10, alias="MAX_HISTORY_MESSAGES")
 
+    ingest_batch_size: int = Field(default=25, alias="INGEST_BATCH_SIZE")
+    ingest_batch_delay_seconds: float = Field(default=10.0, alias="INGEST_BATCH_DELAY_SECONDS")
+
     telegram_bot_token: str | None = Field(default=None, alias="TELEGRAM_BOT_TOKEN")
 
 
