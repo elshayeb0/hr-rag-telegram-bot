@@ -14,7 +14,13 @@ def _slugify(value: str) -> str:
     return value.strip("_")
 
 
-def build_chunk_id(source: str, chunk_index: int, page: int | None = None, sheet_name: str | None = None) -> str:
+def build_chunk_id(
+    source: str,
+    chunk_index: int,
+    page: int | None = None,
+    sheet_name: str | None = None,
+    section_heading: str | None = None,
+) -> str:
     source_slug = _slugify(source)
 
     if page is not None:
@@ -23,6 +29,10 @@ def build_chunk_id(source: str, chunk_index: int, page: int | None = None, sheet
     if sheet_name is not None:
         sheet_slug = _slugify(sheet_name)
         return f"{source_slug}_{sheet_slug}_c{chunk_index}"
+
+    if section_heading is not None:
+        section_slug = _slugify(section_heading)[:80]
+        return f"{source_slug}_{section_slug}_c{chunk_index}"
 
     return f"{source_slug}_c{chunk_index}"
 
@@ -46,6 +56,7 @@ def split_raw_document(raw_document: dict[str, Any]) -> list[DocumentChunk]:
             source=raw_document["source"],
             page=raw_document.get("page"),
             sheet_name=raw_document.get("sheet_name"),
+            section_heading=raw_document.get("section_heading") or raw_document.get("metadata", {}).get("section_heading"),
             chunk_index=index,
         )
 
@@ -58,6 +69,7 @@ def split_raw_document(raw_document: dict[str, Any]) -> list[DocumentChunk]:
                 page=raw_document.get("page"),
                 sheet_name=raw_document.get("sheet_name"),
                 row_range=raw_document.get("row_range"),
+                section_heading=raw_document.get("section_heading") or raw_document.get("metadata", {}).get("section_heading"),
                 chunk_index=index,
                 chunk_id=chunk_id,
                 access_level=raw_document.get("metadata", {}).get("access_level", raw_document.get("access_level", DEFAULT_ACCESS_LEVEL)),

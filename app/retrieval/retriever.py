@@ -46,6 +46,7 @@ def _document_to_retrieved_chunk(document, score: float | None = None) -> Retrie
         page=metadata.get("page"),
         sheet_name=metadata.get("sheet_name"),
         row_range=metadata.get("row_range"),
+        section_heading=metadata.get("section_heading"),
         chunk_id=metadata["chunk_id"],
         access_level=metadata.get("access_level", "employee"),
         department=metadata.get("department"),

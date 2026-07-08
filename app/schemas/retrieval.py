@@ -11,6 +11,7 @@ class RetrievedChunk(BaseModel):
     page: int | None = None
     sheet_name: str | None = None
     row_range: str | None = None
+    section_heading: str | None = None
     chunk_id: str
     access_level: str = "employee"
     department: str | None = None

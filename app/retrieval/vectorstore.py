@@ -15,6 +15,7 @@ def chunk_to_document(chunk: DocumentChunk) -> Document:
             "page": chunk.page,
             "sheet_name": chunk.sheet_name,
             "row_range": chunk.row_range,
+            "section_heading": chunk.section_heading,
             "chunk_index": chunk.chunk_index,
             "chunk_id": chunk.chunk_id,
             "access_level": chunk.access_level,
