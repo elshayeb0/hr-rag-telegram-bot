@@ -2,6 +2,7 @@ from app.memory.memory import conversation_memory
 from app.retrieval.rag_chain import answer_question
 from app.schemas import ChatRequest, ChatResponse
 from app.services.intent_service import UserIntent, classify_intent
+from app.utils.analytics import RequestTimer, log_request_event
 from app.services.response_service import (
     frustration_response,
     gratitude_response,
@@ -14,7 +15,8 @@ from app.services.response_service import (
 
 class QAService:
     def answer(self, request: ChatRequest) -> ChatResponse:
-        conversation_memory.add_user_message(request.user_id, request.message)
+        with RequestTimer() as timer:
+            conversation_memory.add_user_message(request.user_id, request.message)
 
         intent = classify_intent(request.message)
 
@@ -50,7 +52,20 @@ class QAService:
         else:
             response = answer_question(request)
 
-        conversation_memory.add_assistant_message(request.user_id, response.answer)
+            conversation_memory.add_assistant_message(request.user_id, response.answer)
+
+        log_request_event(
+            "qa_request_completed",
+            {
+                "user_id": request.user_id,
+                "message": request.message,
+                "intent": str(intent),
+                "refused": response.refused,
+                "citation_count": len(response.citations),
+                "latency_ms": timer.latency_ms,
+            },
+        )
+
         return response
 
 
