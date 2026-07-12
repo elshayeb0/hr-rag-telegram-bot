@@ -1,7 +1,7 @@
 from enum import Enum
 
 
-class UserIntent(Enum):
+class UserIntent(str, Enum):
     DOCUMENT_QUESTION = "document_question"
     SMALL_TALK = "small_talk"
     GRATITUDE = "gratitude"
